@@ -1,20 +1,25 @@
 server:
   port: 8087
+
 spring:
+  application:
+    name: application-service
   datasource:
-    url: 'jdbc:mysql://localhost:3306/user_db'
+    url: jdbc:mysql://mysql-db:3306/user_db?createDatabaseIfNotExist=true&useSSL=false
     username: root
     password: smit
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+    database-platform: org.hibernate.dialect.MySQLDialect
+
 eureka:
   client:
     service-url:
-      defaultZone: 'http://localhost:7779/eureka/'
+      defaultZone: http://eureka-server:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
